@@ -14,7 +14,7 @@
 <script>
   var periods = ["Warning", "Period 1","Break 1","Period 2","Lunch","Period 3","Break 2","Period 4"]
     // there is no period name for the end of the day
-  var startTimes = ["8:30","8:35","10:02","10:09","11:36","12:15","13:43","13:50","15:17"]
+  
   var period;
   var startTime;
   var endTime;
@@ -52,59 +52,63 @@
       document.body.style.backgroundColor = "#202020";
     } else {
       // first Wednesday of the month
-      if (day < 8 && dateNow.getDay() == 3) {
-        startTimes = ["8:30","8:35","9:46","9:53","11:04","11:48","12:59","13:06","14:17"];
+      //if (day < 8 && dateNow.getDay() == 3) {
+      // Opportunity Wednesday
+      if (dateNow.getDay() == 3) {
+        var startTimes = ["8:30","8:35","9:46","9:53","11:04","11:48","12:59","13:06","14:17"];
       } else {
-        // test if current datetime is greater than period start time
-        for (let i = 0; i < periods.length; i++) {
-          startTime = createDateTime(startTimes[i]);
-          endTime = createDateTime(startTimes[i + 1]);
-          if (dateNow > startTime && dateNow < endTime) {
-            difference = endTime - dateNow;
-            period = periods[i];
-            break;
-          }
-          else {
-            difference = "";
-            period = "";
-          }
+        var startTimes = ["8:30","8:35","10:02","10:09","11:36","12:15","13:43","13:50","15:17"]
+      }
+      // test if current datetime is greater than period start time
+      for (let i = 0; i < periods.length; i++) {
+        startTime = createDateTime(startTimes[i]);
+        endTime = createDateTime(startTimes[i + 1]);
+        if (dateNow > startTime && dateNow < endTime) {
+          difference = endTime - dateNow;
+          period = periods[i];
+          break;
         }
-        // calculate hours, minutes, and seconds for countdown display
-        var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        else {
+          difference = "";
+          period = "";
+        }
+      }
+      // calculate hours, minutes, and seconds for countdown display
+      var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      
+      // set up countdown display
+      if (seconds < 10) {
+        seconds = "0" + seconds;
+      }
+      if (hours > 0) {
+        if (minutes < 10) {
+          minutes = "0" + minutes;
+        }
+        document.getElementById("periodCountdown").innerHTML = hours + ":" + minutes + ":" + seconds;
+        //document.getElementById("periodCountdown").style.color = "blue";
+      } else {
+        document.getElementById("periodCountdown").innerHTML = minutes + ":" + seconds;
+        //document.getElementById("periodCountdown").style.color = "blue";
+
+        // set text color to yellow if < 5 minutes
+        if (minutes < 2) {
+          document.getElementById("periodCountdown").style.color = "yellow";
+        }
+
+        // hide countdown at the end of the day
+        if (minutes == 0 && seconds == 0) {
+          document.getElementById("periodCountdown").style.color = "white";
+        }
+      }
+      document.getElementById("period").innerHTML = period;
+      document.getElementById("period").style.color = "blue";
+
+      // reload each morning for an update
+      if (hours == 5 && minutes == 30 && seconds == 30) {
+        location.reload(true);
         
-        // set up countdown display
-        if (seconds < 10) {
-          seconds = "0" + seconds;
-        }
-        if (hours > 0) {
-          if (minutes < 10) {
-            minutes = "0" + minutes;
-          }
-          document.getElementById("periodCountdown").innerHTML = hours + ":" + minutes + ":" + seconds;
-          //document.getElementById("periodCountdown").style.color = "blue";
-        } else {
-          document.getElementById("periodCountdown").innerHTML = minutes + ":" + seconds;
-          //document.getElementById("periodCountdown").style.color = "blue";
-
-          // set text color to yellow if < 5 minutes
-          if (minutes < 2) {
-            document.getElementById("periodCountdown").style.color = "yellow";
-          }
-
-          // hide countdown at the end of the day
-          if (minutes == 0 && seconds == 0) {
-            document.getElementById("periodCountdown").style.color = "white";
-          }
-        }
-        document.getElementById("period").innerHTML = period;
-        document.getElementById("period").style.color = "blue";
-
-        // reload each morning for an update
-        if (hours == 5 && minutes == 30 && seconds == 30) {
-          location.reload(true);
-        }
       }
     }
   }, 1000); // updating setInterval every 1000 milliseconds
