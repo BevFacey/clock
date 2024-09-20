@@ -60,7 +60,7 @@
         var startTimes = ["8:30","8:35","10:02","10:09","11:36","12:15","13:43","13:50","15:17"]
       }
       // test if current datetime is greater than period start time
-      for (let i = 0; i < periods.length; i++) {
+      for (var i = 0; i < periods.length; i++) {
         startTime = createDateTime(startTimes[i]);
         endTime = createDateTime(startTimes[i + 1]);
         if (dateNow > startTime && dateNow < endTime) {
