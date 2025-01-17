@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fullscreen Clock</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0c63aa;
+            color: #fcce21;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            cursor: none;
+        }
+
+        #clock {
+            font-size: min(20vw, 20vh);
+            font-weight: bold;
+            /* text-shadow: 0 0 20px rgba(252, 206, 33, 0.5); */
+            white-space: nowrap;
+        }
+
+        #date {
+            font-size: 5vw;
+            margin-top: 2vh;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div id="clock">00:00:00</div>
+    <div id="date">Monday, January 1</div>
+
+    <script>
+        // Parse URL parameters for colors
+        const params = new URLSearchParams(window.location.search);
+        const backgroundColor = params.get('background') || '#0047AB';
+        const textColor = params.get('text') || '#FFD700';
+        
+        // Apply colors from URL parameters
+        document.body.style.backgroundColor = backgroundColor;
+        document.body.style.color = textColor;
+        //document.querySelector('#clock').style.textShadow = `0 0 20px ${textColor}88`;  // text shadow 50% opacity
+    
+        function updateClock() {
+            const now = new Date();
+            
+            // Update time
+            const time = now.toLocaleTimeString('en-US', {
+                hour12: true,
+                hour: 'numeric',
+                minute: '2-digit',
+                second: '2-digit'
+            }).toLowerCase();
+            document.getElementById('clock').textContent = time;
+            
+            // Update date
+            const date = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('date').textContent = date;
+        }
+
+        // Update immediately and then every second
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Handle fullscreen
+        document.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            }
+        });
+    </script>
+</body>
+</html>
