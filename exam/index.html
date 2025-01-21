@@ -19,10 +19,16 @@
         }
 
         #clock {
-            font-size: min(20vw, 20vh);
+            font-size: 20vw;
             font-weight: bold;
             /* text-shadow: 0 0 20px rgba(252, 206, 33, 0.5); */
             white-space: nowrap;
+        }
+
+        @supports (font-size: min(20vw, 20vh)) {
+            #clock {
+                font-size: min(20vw, 20vh);
+            }
         }
 
         #date {
