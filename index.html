@@ -19,6 +19,7 @@
   var startTime;
   var endTime;
   var difference;
+  var audio = new Audio("bell.mp3");
 
   function createDateTime(startTime) {
     var currentDate = new Date();
@@ -96,6 +97,11 @@
         if (minutes < 2) {
           document.getElementById("periodCountdown").style.color = "yellow";
         }
+        
+        // sound a bell at 1 second left
+        if (minutes == 0 && seconds == 1) {
+          audio.play();
+        } //*/
 
         // hide countdown at the end of the day
         if (minutes == 0 && seconds == 0) {
@@ -112,6 +118,13 @@
       }
     }
   }, 1000); // updating setInterval every 1000 milliseconds
+
+  // Handle fullscreen
+  document.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            }
+        });
 </script>
 </body>
 </html>
