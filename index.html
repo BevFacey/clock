@@ -5,7 +5,8 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <div id="enableBells" style="text-align: right; font-size: 50%;">Enable bells</div>
+  <!-- <div id="enableBells" style="text-align: right; font-size: 50%;">Enable bells</div> -->
+  <div style="text-align: right;"><button onclick="toggleBells()" id="toggle_bells" style="font-size: 50%; background-color: white; border: 0px;">Enable bells</button></div>
   <div id="day" style="text-align: center; font-size: 500%;"></div>
   <div id="date" style="text-align: center; font-size: 500%;"></div>
   <div id="time" style="text-align: center; font-size: 900%;"></div>
@@ -22,17 +23,17 @@
   var difference;
   var bellsEnabled = false;
   var audio = new Audio("bell.mp3");
+  const bellsButton = document.getElementById("toggle_bells");
 
-  function enableBells() {
+  function toggleBells() {
     if (bellsEnabled) {
-      document.getElementById("enableBells").innerHTML = "Enable bells";
       bellsEnabled = false;
+      bellsButton.innerHTML = "Enable bells";
     } else {
-      document.getElementById("enableBells").innerHTML = "Disable bells";
       bellsEnabled = true;
+      bellsButton.innerHTML = "Disable bells";
     }
   }
-  document.getElementById("enableBells").addEventListener("click", enableBells);
 
   function createDateTime(startTime) {
     var currentDate = new Date();
