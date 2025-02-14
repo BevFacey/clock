@@ -5,11 +5,12 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-<div id="day" style="text-align: center; font-size: 500%;"></div>
-<div id="date" style="text-align: center; font-size: 500%;"></div>
-<div id="time" style="text-align: center; font-size: 900%;"></div>
-<div id="period" style="text-align: center; font-size: 400%;"></div>
-<div id="periodCountdown" style="text-align: center; font-size: 500%;"></div>
+  <div id="enableBells" style="text-align: right; font-size: 50%;">Enable bells</div>
+  <div id="day" style="text-align: center; font-size: 500%;"></div>
+  <div id="date" style="text-align: center; font-size: 500%;"></div>
+  <div id="time" style="text-align: center; font-size: 900%;"></div>
+  <div id="period" style="text-align: center; font-size: 400%;"></div>
+  <div id="periodCountdown" style="text-align: center; font-size: 500%;"></div>
 
 <script>
   var periods = ["Warning","Block 1","Break 1","Block 2","Lunch","Warning","Block 3","Break 2","Block 4"]
@@ -19,7 +20,19 @@
   var startTime;
   var endTime;
   var difference;
+  var bellsEnabled = false;
   var audio = new Audio("bell.mp3");
+
+  function enableBells() {
+    if (bellsEnabled) {
+      document.getElementById("enableBells").innerHTML = "Enable bells";
+      bellsEnabled = false;
+    } else {
+      document.getElementById("enableBells").innerHTML = "Disable bells";
+      bellsEnabled = true;
+    }
+  }
+  document.getElementById("enableBells").addEventListener("click", enableBells);
 
   function createDateTime(startTime) {
     var currentDate = new Date();
@@ -93,14 +106,16 @@
         document.getElementById("periodCountdown").innerHTML = minutes + ":" + seconds;
         //document.getElementById("periodCountdown").style.color = "blue";
 
-        // set text color to yellow if < 5 minutes
+        // set text color to yellow if < 2 minutes
         if (minutes < 2) {
           document.getElementById("periodCountdown").style.color = "yellow";
         }
         
         // sound a bell at 1 second left
         if (hours == 0 && minutes == 0 && seconds == 1) {
+        //if (seconds == 30 || seconds == 0) {
           audio.play();
+          console.log(hours + ":" + minutes + ":" + seconds);
         } //*/
 
         // hide countdown at the end of the day
@@ -123,6 +138,10 @@
   document.addEventListener('click', () => {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
             }
         });
 </script>
