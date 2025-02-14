@@ -5,25 +5,25 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <!-- <div id="enableBells" style="text-align: right; font-size: 50%;">Enable bells</div> -->
-  <div style="text-align: right;"><button onclick="toggleBells()" id="toggle_bells" style="font-size: 50%; background-color: white; border: 0px;">Enable bells</button></div>
+  <div style="text-align: right;"><button id="toggle_bells" style="font-size: 50%; background-color: white; border: 0px;">Enable bells</button></div>
   <div id="day" style="text-align: center; font-size: 500%;"></div>
   <div id="date" style="text-align: center; font-size: 500%;"></div>
   <div id="time" style="text-align: center; font-size: 900%;"></div>
   <div id="period" style="text-align: center; font-size: 400%;"></div>
   <div id="periodCountdown" style="text-align: center; font-size: 500%;"></div>
+  <audio id="bellSound" src="bell.mp3" preload="auto"></audio>
 
 <script>
-  var periods = ["Warning","Block 1","Break 1","Block 2","Lunch","Warning","Block 3","Break 2","Block 4"]
-    // there is no period name for the end of the day
+  var periods = ["Warning","Block 1","Break 1","Block 2","Lunch","Warning","Block 3","Break 2","Block 4"] // there is no period name for the end of the day
   
   var period;
   var startTime;
   var endTime;
   var difference;
   var bellsEnabled = false;
-  var audio = new Audio("bell.mp3");
-  const bellsButton = document.getElementById("toggle_bells");
+  var audio = document.getElementById("bellSound");
+  var bellsButton = document.getElementById("toggle_bells");
+  bellsButton.addEventListener("click", toggleBells);
 
   function toggleBells() {
     if (bellsEnabled) {
@@ -46,7 +46,7 @@
   var x = setInterval(function() {
     var dateNow = new Date();
     var weekdayNumber = dateNow.getDay();
-    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var weekday = weekdays[weekdayNumber];
     var hour = dateNow.getHours();
     var ampm = "AM";
@@ -113,14 +113,14 @@
         }
         
         // sound a bell at 1 second left
-        if (hours == 0 && minutes == 0 && seconds == 1) {
-        //if (seconds == 30 || seconds == 0) {
+        if (hours == 0 && minutes == 0 && seconds == 1 && bellsEnabled) {
+        //if (bellsEnabled && seconds == 30 || seconds == 0) {
           audio.play();
-          console.log(hours + ":" + minutes + ":" + seconds);
         } //*/
 
         // hide countdown at the end of the day
         if (minutes == 0 && seconds == 0) {
+          //document.getElementById("periodCountdown").style.display = "none";
           document.getElementById("periodCountdown").style.color = "white";
         }
       }
@@ -130,18 +130,16 @@
       // reload each morning for an update
       if (hours == 5 && minutes == 30 && seconds == 30) {
         location.reload(true);
-        
       }
     }
   }, 1000); // updating setInterval every 1000 milliseconds
 
-  // Handle fullscreen
+  // toggle fullscreen
   document.addEventListener('click', () => {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen();
             } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
+                if (document.exitFullscreen) {document.exitFullscreen();
                 }
             }
         });
