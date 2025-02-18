@@ -56,6 +56,9 @@
       // Opportunity Wednesday
       if (dateNow.getDay() == 3) {
         var startTimes = ["8:30","8:35","9:46","9:53","11:04","11:43","11:48","12:59","13:06","14:17"];
+      // if the date is 2025-02-18
+      } if (dateNow.toISOString().split("T")[0] == "2025-02-18") { // for Allyship Presentation
+        var startTimes = ["8:30","8:35","9:40","11:00","11:08","12:13","12:58","14:03","14:11","15:17"];
       } else {
         var startTimes = ["8:30","8:35","10:02","10:09","11:36","12:11","12:16","13:43","13:50","15:17"]
       }
