@@ -92,9 +92,9 @@
         document.getElementById("periodCountdown").innerHTML = minutes + ":" + seconds;
         //document.getElementById("periodCountdown").style.color = "blue";
 
-        // set text color to yellow if < 5 minutes
+        // set text color to red if < 2 minutes
         if (minutes < 2) {
-          document.getElementById("periodCountdown").style.color = "yellow";
+          document.getElementById("periodCountdown").style.color = "red";
         }
 
         // hide countdown at the end of the day
