@@ -56,8 +56,10 @@
       // Opportunity Wednesday
       if (dateNow.getDay() == 3) {
         var startTimes = ["8:30","8:35","9:46","9:53","11:04","11:43","11:48","12:59","13:06","14:17"];
+      } else if (dateNow.getMonth() === 7 && dateNow.getDate() === 28) { // August 28, 2023
+        var startTimes = ["12:15","12:16","12:58","13:03","13:44","13:48","13:49","14:30","14:35","15:17"];
       } else {
-        var startTimes = ["8:30","8:35","10:02","10:09","11:36","12:11","12:16","13:43","13:50","15:17"]
+        var startTimes = ["8:30","8:35","10:02","10:09","11:36","12:11","12:16","13:43","13:50","15:17"];
       }
       // test if current datetime is greater than period start time
       for (var i = 0; i < periods.length; i++) {
