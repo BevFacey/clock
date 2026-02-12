@@ -48,16 +48,20 @@
     document.getElementById("periodCountdown").style.color = "blue";
 
     // Saturday or Sunday
-    if (dateNow.getDay() == 0 || dateNow.getDay() == 6) {
+    if (dateNow.getDay() === 0 || dateNow.getDay() === 6) {
       document.body.style.backgroundColor = "#202020";
     } else {
-      // first Wednesday of the month
-      //if (day < 8 && dateNow.getDay() == 3) {
-      // Opportunity Wednesday
-      if (dateNow.getDay() == 3) {
+      //if (day < 8 && dateNow.getDay() == 3) { // first Wednesday of the month
+      
+      if (dateNow.getDay() == 3) { // Opportunity Wednesday
         var startTimes = ["8:30","8:35","9:46","9:53","11:04","11:43","11:48","12:59","13:06","14:17"];
-      } else if (dateNow.getMonth() === 7 && dateNow.getDate() === 28) { // August 28
+
+      } else if (dateNow.getMonth() === 7 && dateNow.getDate() === 28) { // August 28 half day full schedule
         var startTimes = ["12:15","12:16","12:58","13:03","13:44","13:48","13:49","14:30","14:35","15:17"];
+
+      } else if (dateNow.getFullYear() === 2026 && dayNow.getMonth() === 1 && dayNow.getDate() === 17) { // February 17, 2026
+        var startTimes = ["8:30","8:35","9:40","11:08","12:13","12:53","12:58","14:03","14:11","15:17"];
+
       } else {
         var startTimes = ["8:30","8:35","10:02","10:09","11:36","12:11","12:16","13:43","13:50","15:17"];
       }
