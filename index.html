@@ -12,7 +12,7 @@
 <div id="periodCountdown" style="text-align: center; font-size: 500%;"></div>
 
 <script>
-  var periods = ["Warning","Period 1","Break 1","Period 2","Lunch","Warning","Period 3","Break 2","Period 4"]
+  var periods = [" ","Period 1","Break 1","Period 2","Lunch","Warning","Period 3","Break 2","Period 4"]
     // there is no period name for the end of the day
   
   var period;
@@ -56,7 +56,7 @@
       if (dateNow.getDay() == 3) { // Opportunity Wednesday
         var startTimes = ["8:30","8:35","9:46","9:53","11:04","11:43","11:48","12:59","13:06","14:17"];
 
-      } else if (dateNow.getMonth() === 7 && dateNow.getDate() === 30) { // August 30 half day full schedule
+      } else if (dateNow.getMonth() === 7 && dateNow.getDate() === 31) { // August 31 half day full schedule
         var startTimes = ["12:15","12:16","12:56","13:03","13:43","13:49","13:50","14:30","14:37","15:17"];
 
       } else if (dateNow.getFullYear() === 2026 && dateNow.getMonth() === 1 && dateNow.getDate() === 17) { // February 17, 2026
