@@ -20,8 +20,13 @@
   var difference;
   var displayedDate;
 
+  // Date whose local fields reflect America/Edmonton, regardless of the computer's time zone
+  function edmontonNow() {
+    return new Date(new Date().toLocaleString("en-US", {timeZone: "America/Edmonton"}));
+  }
+
   function createDateTime(startTime) {
-    var currentDate = new Date();
+    var currentDate = edmontonNow();
     currentDate.setHours(startTime.split(":")[0]);
     currentDate.setMinutes(startTime.split(":")[1]);
     currentDate.setSeconds(0);
@@ -29,7 +34,7 @@
   }
 
   var x = setInterval(function() {
-    var dateNow = new Date();
+    var dateNow = edmontonNow();
 
     // reload the page if the date has changed
     var currentDate = [dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate()].join("-");
@@ -47,7 +52,7 @@
     if (minute < 10) {minute = "0" + minute;}
     //var ampm = dateNow.getHours() >= 12 ? "PM" : "AM";
     document.getElementById("day").innerHTML = weekday;
-    document.getElementById("date").innerHTML = dateNow.toISOString().split("T")[0];
+    document.getElementById("date").innerHTML = [dateNow.getFullYear(), ("0" + (dateNow.getMonth() + 1)).slice(-2), ("0" + dateNow.getDate()).slice(-2)].join("-");
     document.getElementById("time").innerHTML = hour + ":" + minute + " " + ampm;
     document.getElementById("periodCountdown").style.color = "blue";
 

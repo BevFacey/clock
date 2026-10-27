@@ -73,7 +73,7 @@
         //document.querySelector('#clock').style.textShadow = `0 0 20px ${textColor}88`;  // text shadow 50% opacity
     
         function updateClock() {
-            const now = new Date();
+            const now = new Date(new Date().toLocaleString('en-US', {timeZone: 'America/Edmonton'}));
             
             // Update time
             const time = now.toLocaleTimeString('en-US', {
